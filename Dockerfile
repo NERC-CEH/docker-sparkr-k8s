@@ -1,7 +1,10 @@
 FROM gcr.io/spark-operator/spark-r:v2.4.5
 
+RUN echo "deb http://cloud.r-project.org/bin/linux/debian buster-cran35/" | tee -a /etc/apt/sources.list && \
+    apt-key adv --keyserver keys.gnupg.net --recv-key 'E19F5F87128899B192B1A2C2AD5F960A256A04AF'
+
 RUN apt-get update --fix-missing && \
-    apt-get install -y wget bzip2 ca-certificates curl git && \
+    apt-get install -y wget bzip2 ca-certificates curl git r-base r-base-dev && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
@@ -16,3 +19,8 @@ RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-4.5.11-Linux-x86
     /opt/conda/bin/conda clean -tipsy && \
     ln -s /opt/conda/etc/profile.d/conda.sh /etc/profile.d/conda.sh && \
     echo ". /opt/conda/etc/profile.d/conda.sh" >> ~/.bashrc
+
+#RUN conda install -y r-pkgs
+#Jira Task - Investigating how Spark would work with Conda environments
+#1. Instrall the most cmmonly used R pacakages for Environmental Science into the Spark worker images using conda(this would install into the base environment on the spark worker images
+#2. Thn the user get to install any additional images the need with system("conda install -y r-pkg-name")
