@@ -20,6 +20,10 @@ RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-4.5.11-Linux-x86
     ln -s /opt/conda/etc/profile.d/conda.sh /etc/profile.d/conda.sh && \
     echo ". /opt/conda/etc/profile.d/conda.sh" >> ~/.bashrc
 
+# Install Sparklyr
+RUN R -e "install.packages('sparklyr', repos='http://cran.rstudio.com/')"
+
+
 #RUN conda install -y r-pkgs
 #Jira Task - Investigating how Spark would work with Conda environments
 #1. Instrall the most cmmonly used R pacakages for Environmental Science into the Spark worker images using conda(this would install into the base environment on the spark worker images
