@@ -13,11 +13,12 @@ RUN wget -q https://repo1.maven.org/maven2/com/amazonaws/aws-java-sdk/1.7.4/aws-
 
 ENV PATH /opt/conda/bin:$PATH
 
-RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-4.5.11-Linux-x86_64.sh -O ~/miniconda.sh && \
+RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-py37_4.8.3-Linux-x86_64.sh -O ~/miniconda.sh && \
     /bin/bash ~/miniconda.sh -b -p /opt/conda && \
     rm ~/miniconda.sh && \
     /opt/conda/bin/conda clean -tipsy && \
     ln -s /opt/conda/etc/profile.d/conda.sh /etc/profile.d/conda.sh && \
+    ln -sf /opt/conda/lib/libstdc++.so.6.0.26 /usr/lib/x86_64-linux-gnu/libstdc++.so.6 && \
     echo ". /opt/conda/etc/profile.d/conda.sh" >> ~/.bashrc
 
 #RUN conda install -y r-pkgs
